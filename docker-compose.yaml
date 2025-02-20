@@ -1,0 +1,55 @@
+version: '1'
+
+volumes:
+  postgres_data:
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./Docker/Dockerfile.backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://username:password@postgres:5432/postgres
+    depends_on:
+      - postgres
+    command: ["/bin/sh", "-c", "bun run db:migrate && bun run start:backend"]
+
+  
+  frontend:
+    build: 
+      context: .
+      dockerfile: ./Docker/Dockerfile.frontend
+      args:
+        - DATABASE_URL=postgresql://username:password@postgres:5432/postgres
+    ports:
+      - "3002:3002"
+    depends_on:
+      - postgres
+
+  ws:
+    build: 
+      context: .
+      dockerfile: ./Docker/Dockerfile.ws
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgresql://username:password@postgres:5432/postgres
+    depends_on:
+      - postgres
+    command: ["/bin/sh", "-c", "bun run db:migrate && bun run start:ws"]
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+
