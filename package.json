@@ -10,7 +10,8 @@
     "db:generate": "cd packages/db && bunx prisma generate",
     "start:backend": "cd apps/backend && bun run index.ts",
     "start:ws": "cd apps/ws && bun run index.ts",
-    "start:frontend": "cd apps/web && bun run next start --port 3002"
+    "start:frontend": "cd apps/web && bun run next start --port 3002",
+    "build:frontend": "cd apps/web && bun run next build"
   },
   "devDependencies": {
     "prettier": "^3.5.0",

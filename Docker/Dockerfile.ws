@@ -3,12 +3,12 @@ FROM oven/bun:1
 WORKDIR /src/app
 
 COPY ./packages ./packages
-COPY ./package.json ./package.json
-COPY ./bun.lockb ./bun.lockb
-COPY ./turbo.json ./turbo.json
+COPY package.json bun.lockb turbo.json ./
+COPY ./apps/ws ./apps/ws
 
 RUN bun install
-COPY ./apps/ws ./apps/ws
+COPY . .
+
 
 RUN bun run db:generate
 
