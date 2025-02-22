@@ -20,3 +20,14 @@ jobs:
           file: ./Docker/Dockerfile.ws
           push: true
           tags: nitinkumarpal/docker_with_cicd_practice-ws:${{github.sha}}
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.1
+        with:
+            host: ${{secrets.HOST}}
+            username: ubuntu
+            key : ${{secrets.KEY}}
+            script: |
+                docker stop ws || true
+                docker rm ws || true
+                docker pull nitinkumarpal/docker_with_cicd_practice-ws:${{github.sha}}
+                docker run -d --name ws -p 3001:3001 nitinkumarpal/docker_with_cicd_practice-ws:${{github.sha}}
