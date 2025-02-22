@@ -27,6 +27,8 @@ jobs:
             username: ubuntu
             key: ${{secrets.KEY}}
             script: |
+                docker stop backend || true
+                docker rm backend || true
                 docker pull nitinkumarpal/docker_with_cicd_practice-backend:${{github.sha}}
-                docker run -d -p 3000:3000 nitinkumarpal/docker_with_cicd_practice-backend:${{github.sha}}
+                docker run -d --name backend -p 3000:3000 nitinkumarpal/docker_with_cicd_practice-backend:${{github.sha}}
    
