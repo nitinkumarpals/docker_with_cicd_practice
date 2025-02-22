@@ -4,7 +4,7 @@ export default async function Home() {
   const users = await prisma.user.findMany();
   return (
     <>
-      <h1>Users</h1>
+      <h1>Users Are</h1>
       <div>
         {users.map((user) => (
           <div key={user.id}>{user.name}</div>
