@@ -19,4 +19,4 @@ jobs:
           context: .
           file: ./Docker/Dockerfile.backend
           push: true
-          tags: docker_with_cicd_practice/backend:${{github.sha}}
+          tags: nitinkumarpal/docker_with_cicd_practice-backend:${{github.sha}}
