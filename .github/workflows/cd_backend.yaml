@@ -20,3 +20,13 @@ jobs:
           file: ./Docker/Dockerfile.backend
           push: true
           tags: nitinkumarpal/docker_with_cicd_practice-backend:${{github.sha}}
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.1
+        with:
+            host: ${{secrets.HOST}}
+            username: ubuntu
+            key: ${{secrets.KEY}}
+            script: |
+                docker pull nitinkumarpal/docker_with_cicd_practice-backend:${{github.sha}}
+                docker run -d -p 3000:3000 nitinkumarpal/docker_with_cicd_practice-backend:${{github.sha}}
+   
