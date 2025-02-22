@@ -4,18 +4,17 @@ import { faker } from "@faker-js/faker";
 const app = express();
 
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "Hello from backend" });
+  res.status(200).json({ message: "Hello from backend", success: true });
 });
-app.post('/',async(req,res)=>{
-  
+app.post("/", async (req, res) => {
   const user = await prisma.user.create({
     data: {
       email: faker.internet.email(),
       name: faker.person.fullName(),
     },
   });
-  res.status(200).json({message:"User created",user})
-})
+  res.status(200).json({ message: "User created", user });
+});
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
